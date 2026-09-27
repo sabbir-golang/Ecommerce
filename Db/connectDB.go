@@ -29,6 +29,7 @@ func ConnectDb() *sql.DB {
 		return nil
 	}
 	defer rows.Close()
+	handlers.Products = []models.Product{}
 
 	for rows.Next() {
 		var prd models.Product
@@ -44,12 +45,12 @@ func ConnectDb() *sql.DB {
 			return nil
 		}
 		handlers.Products = append(handlers.Products, prd)
-		fmt.Println("ID:", prd.ID)
-		fmt.Println("Title:", prd.Title)
-		fmt.Println("Description:", prd.Description)
-		fmt.Println("Price:", prd.Price)
-		fmt.Println("Image:", prd.ImgUrl)
-		fmt.Println("----------------------")
+		// fmt.Println("ID:", prd.ID)
+		// fmt.Println("Title:", prd.Title)
+		// fmt.Println("Description:", prd.Description)
+		// fmt.Println("Price:", prd.Price)
+		// fmt.Println("Image:", prd.ImgUrl)
+		// fmt.Println("----------------------")
 	}
 	return Db
 	// defer Db.Close()

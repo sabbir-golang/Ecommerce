@@ -13,7 +13,6 @@ var err error
 var Products []models.Product
 
 func CreateProducts(w http.ResponseWriter, r *http.Request) {
-	// HandleCORS(w)
 	// if r.Method == "OPTIONS" {
 	// 	w.WriteHeader(200)
 	// 	return
