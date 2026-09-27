@@ -9,7 +9,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// var Db sql.DB
 func ConnectDb() *sql.DB {
 	ConnectStr := "host=localhost port=5432 user=postgres password=123456 dbname=ecommerce sslmode=disable"
 	Db, err := sql.Open("postgres", ConnectStr)
@@ -23,8 +22,6 @@ func ConnectDb() *sql.DB {
 		return nil
 	}
 	fmt.Println("DB connected")
-	// defer Db.Close()
-
 	sqlState := `select *from products`
 	rows, err := Db.Query(sqlState)
 	if err != nil {
@@ -55,6 +52,5 @@ func ConnectDb() *sql.DB {
 		fmt.Println("----------------------")
 	}
 	return Db
+	// defer Db.Close()
 }
-
-// func GetDb()

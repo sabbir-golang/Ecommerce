@@ -8,7 +8,8 @@ import (
 	"net/http"
 )
 
-var DB *sql.DB
+var Db *sql.DB
+var err error
 var Products []models.Product
 
 func CreateProducts(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +34,7 @@ func CreateProducts(w http.ResponseWriter, r *http.Request) {
 	encoder := json.NewEncoder(w)
 	encoder.Encode(newProduct)
 	sqlstat := "insert into products(id,title, description, price, image_url) values ($1,$2,$3,$4,$5)"
-	_, err := DB.Exec(sqlstat, newProduct.ID, newProduct.Title, newProduct.Description, newProduct.Price, newProduct.ImgUrl)
+	_, err := Db.Exec(sqlstat, newProduct.ID, newProduct.Title, newProduct.Description, newProduct.Price, newProduct.ImgUrl)
 	if err != nil {
 		fmt.Println("Database instert Failed", err)
 		return
