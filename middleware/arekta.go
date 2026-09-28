@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-func Logger(next http.Handler) http.Handler {
+func Arekta(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		next.ServeHTTP(w, r)
-		log.Println(r.Method, r.URL.Path, time.Since(start))
+		log.Print("Ami Arekta middleware", r.Method, time.Since(start))
 	})
 }

@@ -1,8 +1,6 @@
 package main
 
-import (
-	cmd "ecommerce/Cmd"
-)
+import cmd "ecommerce/Cmd"
 
 // func helloHandler(w http.ResponseWriter, r *http.Request) {
 // 	fmt.Fprintln(w, "Hello HandleFunc")
