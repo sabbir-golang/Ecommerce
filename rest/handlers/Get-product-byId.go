@@ -1,7 +1,8 @@
 package handlers
 
 import (
-	"encoding/json"
+	utils "ecommerce/Utils"
+	"ecommerce/database"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -17,8 +18,8 @@ func GetProductById(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Invalid ID number")
 		return
 	}
-	encoder := json.NewEncoder(w)
-	encoder.Encode(Products[id-1])
-	fmt.Println(Products[id-1])
+	product := database.Get(id)
+	utils.SendData(w, product, 200)
+	fmt.Println(product)
 
 }

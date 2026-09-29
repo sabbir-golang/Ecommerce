@@ -2,8 +2,7 @@ package db
 
 import (
 	"database/sql"
-	"ecommerce/handlers"
-	"ecommerce/models"
+	"ecommerce/database"
 	"fmt"
 
 	_ "github.com/lib/pq"
@@ -29,10 +28,9 @@ func ConnectDb() *sql.DB {
 		return nil
 	}
 	defer rows.Close()
-	handlers.Products = []models.Product{}
 
 	for rows.Next() {
-		var prd models.Product
+		var prd database.Product
 		err := rows.Scan(
 			&prd.ID,
 			&prd.Title,
@@ -44,11 +42,11 @@ func ConnectDb() *sql.DB {
 			fmt.Println("Scan Failed")
 			return nil
 		}
-		handlers.Products = append(handlers.Products, prd)
+		database.Store(prd)
 		// fmt.Println("ID:", prd.ID)
 		// fmt.Println("Title:", prd.Title)
 		// fmt.Println("Description:", prd.Description)
-		// fmt.Println("Price:", prd.Price)
+		// fmt.Println("Price:", prd.Price)handlers
 		// fmt.Println("Image:", prd.ImgUrl)
 		// fmt.Println("----------------------")
 	}

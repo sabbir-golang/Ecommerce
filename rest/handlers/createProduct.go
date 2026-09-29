@@ -2,7 +2,9 @@ package handlers
 
 import (
 	"database/sql"
-	"ecommerce/models"
+	utils "ecommerce/Utils"
+	"ecommerce/database"
+
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,7 +12,6 @@ import (
 
 var Db *sql.DB
 var err error
-var Products []models.Product
 
 func CreateProducts(w http.ResponseWriter, r *http.Request) {
 	// if r.Method == "OPTIONS" {
@@ -23,19 +24,17 @@ func CreateProducts(w http.ResponseWriter, r *http.Request) {
 	// price := r.Body("price")
 	// title := r.Body("title")
 
-	var newProduct models.Product
+	var newProduct database.Product
 	decode := json.NewDecoder(r.Body)
 	decode.Decode(&newProduct)
 	// fmt.Println(len(Products))
-	newProduct.ID = len(Products) + 1
-	Products = append(Products, newProduct)
-	w.WriteHeader(201)
-	encoder := json.NewEncoder(w)
-	encoder.Encode(newProduct)
+	newProduct.ID = len(database.List()) + 1
+	database.Store(newProduct)
+	utils.SendData(w, newProduct, 201)
 	sqlstat := "insert into products(id,title, description, price, image_url) values ($1,$2,$3,$4,$5)"
 	_, err := Db.Exec(sqlstat, newProduct.ID, newProduct.Title, newProduct.Description, newProduct.Price, newProduct.ImgUrl)
 	if err != nil {
-		fmt.Println("Database instert Failed", err)
+		utils.SendError(w, 404, "Database instert Failed")
 		return
 	}
 	fmt.Println("insert Done ", newProduct)

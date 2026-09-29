@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"ecommerce/database"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -17,20 +18,10 @@ func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	sqlState := `delete from products where id= $1`
-	Db.Exec(sqlState, id)
-	fmt.Println(Products[id-1])
-	for i, product := range Products {
-		if product.ID == id {
-			Products = append(Products[:i], Products[i+1:]...)
-			w.WriteHeader(http.StatusOK)
-			fmt.Fprintf(w, "Product %d deleted successfully", id)
-
-			break
-		}
+	_, err = Db.Exec(sqlState, id)
+	if err != nil {
+		http.Error(w, "Product not Found !", http.StatusNotFound)
 	}
-	http.Error(w, "Product not Found !", http.StatusNotFound)
+	database.Delete(id)
 
-	// if r.Method != "POST" {
-	// 	return
-	// }
 }

@@ -1,7 +1,8 @@
 package handlers
 
 import (
-	"encoding/json"
+	utils "ecommerce/Utils"
+	"ecommerce/database"
 	"net/http"
 )
 
@@ -11,6 +12,6 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
 	// 	w.WriteHeader(200)
 	// 	return
 	// }
-	encoder := json.NewEncoder(w)
-	encoder.Encode(Products)
+	product := database.List()
+	utils.SendData(w, product, 200)
 }
