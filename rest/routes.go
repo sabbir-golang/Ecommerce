@@ -8,11 +8,12 @@ import (
 
 func initRoutes(mux *http.ServeMux, manager *middleware.Manager) {
 
-	mux.Handle("GET /route",
+	mux.Handle("GET /create-user",
 		manager.With(
-			http.HandlerFunc(handlers.GetProducts),
+			http.HandlerFunc(handlers.CreateUser),
 		),
 	)
+
 	mux.Handle("GET /products", manager.With(
 		http.HandlerFunc(handlers.GetProducts),
 	),
@@ -33,4 +34,5 @@ func initRoutes(mux *http.ServeMux, manager *middleware.Manager) {
 		http.HandlerFunc(handlers.UpdateProducts),
 	),
 	)
+	mux.Handle("POST /login", manager.With(http.HandlerFunc(handlers.LoginUser)))
 }

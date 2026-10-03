@@ -13,5 +13,6 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 	product := database.List()
+
 	utils.SendData(w, product, 200)
 }

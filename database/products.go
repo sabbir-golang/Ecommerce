@@ -1,7 +1,5 @@
 package database
 
-import "fmt"
-
 type Product struct {
 	ID          int    `json:"_id"`
 	Title       string `json:"title"`
@@ -10,12 +8,13 @@ type Product struct {
 	ImgUrl      string `json:"imageUrl"`
 }
 
-var productList []Product
+var productList = make([]Product, 0)
 
 func Store(p Product) {
 	productList = append(productList, p)
 }
 func List() []Product {
+
 	return productList
 }
 func Get(productId int) *Product {
@@ -29,10 +28,8 @@ func Get(productId int) *Product {
 func Update(UpdateProduct Product) {
 	for i, product := range productList {
 		if product.ID == UpdateProduct.ID {
-			productList[i].Title = UpdateProduct.Title
-			productList[i].Description = UpdateProduct.Description
-			productList[i].Price = UpdateProduct.Price
-			fmt.Println(productList[i])
+			productList[i] = UpdateProduct
+			// fmt.Println(productList[i])
 			return
 		}
 	}
