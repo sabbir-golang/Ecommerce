@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 
@@ -14,6 +15,7 @@ type Config struct {
 	Version     string
 	ServiceName string
 	HttpPort    int64
+	SecretKey   string
 }
 
 func Load() {
@@ -41,10 +43,16 @@ func Load() {
 	if err != nil {
 		os.Exit(1)
 	}
+	secretKey := os.Getenv("SECRET_KEY")
+	if secretKey == "" {
+		log.Println("SecretKey is Required!")
+		os.Exit(1)
+	}
 	configuration = Config{
 		Version:     Version,
 		ServiceName: Service,
 		HttpPort:    port,
+		SecretKey:   secretKey,
 	}
 }
 func GetConfig() Config {
