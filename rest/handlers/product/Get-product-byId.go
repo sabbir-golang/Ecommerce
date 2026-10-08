@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	utils "ecommerce/Utils"
@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func GetProductById(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetProductById(w http.ResponseWriter, r *http.Request) {
 	productId := r.PathValue("productId")
 	// fmt.Println("METHOD:", r.Method)
 	fmt.Println("URL PATH:", r.URL.Path)

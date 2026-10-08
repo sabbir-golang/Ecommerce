@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	"database/sql"
@@ -13,7 +13,7 @@ import (
 var Db *sql.DB
 var err error
 
-func CreateProducts(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) CreateProducts(w http.ResponseWriter, r *http.Request) {
 	// if r.Method == "OPTIONS" {
 	// 	w.WriteHeader(200)
 	// 	return

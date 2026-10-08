@@ -3,7 +3,9 @@ package rest
 import (
 	"ecommerce/config"
 	"ecommerce/db"
-	"ecommerce/rest/handlers"
+	"ecommerce/rest/handlers/product"
+	"ecommerce/rest/handlers/reviews"
+	"ecommerce/rest/handlers/user"
 	"ecommerce/rest/middleware"
 	"fmt"
 	"net/http"
@@ -11,13 +13,32 @@ import (
 	"strconv"
 )
 
-func Start(cnf config.Config) {
-	handlers.Db = db.ConnectDb()
+type Server struct {
+	productHandler *product.Handler
+	userHandler    *user.Handler
+	reviewsHandler *reviews.Handler
+}
+
+func NewServer(productHandler *product.Handler,
+	userHandler *user.Handler,
+	reviewsHandler *reviews.Handler,
+) *Server {
+	return &Server{
+		productHandler: productHandler,
+		userHandler:    userHandler,
+		reviewsHandler: reviewsHandler,
+	}
+}
+
+func (server *Server) Start(cnf config.Config) {
+	product.Db = db.ConnectDb()
 	manager := middleware.NewManager()
 	manager.Use(middleware.Preflight, middleware.Cors, middleware.Logger)
 	mux := http.NewServeMux()
 	wrapedMux := manager.WrapMux(mux)
-	initRoutes(mux, manager)
+	server.productHandler.RegRoutes(mux, manager)
+	server.userHandler.RegisterRoutes(mux, manager)
+	server.reviewsHandler.RegReviews(mux, *manager)
 
 	addr := ":" + strconv.Itoa(int(cnf.HttpPort))
 	fmt.Println("Listening on port ", addr)

@@ -4,14 +4,13 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	utils "ecommerce/Utils"
-	"ecommerce/config"
 	"fmt"
 	"log"
 	"net/http"
 	"strings"
 )
 
-func AuthenticationJwt(next http.Handler) http.Handler {
+func (m *Middlewares) AuthenticationJwt(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Hi iam JWT")
 		header := r.Header.Get("Authorization")
@@ -27,7 +26,7 @@ func AuthenticationJwt(next http.Handler) http.Handler {
 		jwtPayload := tokenParts[1]
 		jwtSigniture := tokenParts[2]
 		byteMessage := []byte(jwtHeader + "." + jwtPayload)
-		byteSecretKey := []byte(config.GetConfig().SecretKey)
+		byteSecretKey := []byte(m.cnf.SecretKey)
 		h := hmac.New(sha256.New, byteSecretKey)
 		h.Write(byteMessage)
 		hash := h.Sum(nil)

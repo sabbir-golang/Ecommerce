@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	utils "ecommerce/Utils"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func GetProducts(w http.ResponseWriter, r *http.Request) {
+func (h *Handler)GetProducts(w http.ResponseWriter, r *http.Request) {
 	// HandleCORS(w)
 	// if r.Method == "OPTIONS" {
 	// 	w.WriteHeader(200)

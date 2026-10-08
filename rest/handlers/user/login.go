@@ -1,4 +1,4 @@
-package handlers
+package user
 
 import (
 	utils "ecommerce/Utils"
@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func LoginUser(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) LoginUser(w http.ResponseWriter, r *http.Request) {
 	var reqLog database.ReqLogin
 
 	json.NewDecoder(r.Body).Decode(&reqLog)
