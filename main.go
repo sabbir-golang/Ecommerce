@@ -1,17 +1,35 @@
 package main
 
-import cmd "ecommerce/Cmd"
+import (
+	"fmt"
+)
 
 // func helloHandler(w http.ResponseWriter, r *http.Request) {
 // 	fmt.Fprintln(w, "Hello HandleFunc")
 // }
 
 //	func AboutHandler(w http.ResponseWriter, r *http.Request) {
+
 //		fmt.Fprintf(w, "I am a software engineer")
 //	}
 
+type user struct {
+	Name  string
+	Age   int
+	Money float64
+}
+
+func (obj *user) PrintDetails() {
+	fmt.Println(obj.Name, obj.Age, obj.Money)
+}
 func main() {
-	cmd.Serve()
+	usr1 := user{
+		Name:  "Sabbir Ahmed",
+		Age:   29,
+		Money: 50.6,
+	}
+	usr1.PrintDetails()
+	// cmd.Serve()
 	// secret := []byte("My-set")
 	// message := []byte("Hello-world")
 

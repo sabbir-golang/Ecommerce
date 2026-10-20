@@ -30,7 +30,7 @@ func NewServer(productHandler *product.Handler,
 	}
 }
 
-func (server *Server) Start(cnf config.Config) {
+func (server *Server) Start(cnf *config.Config) {
 	product.Db = db.ConnectDb()
 	manager := middleware.NewManager()
 	manager.Use(middleware.Preflight, middleware.Cors, middleware.Logger)

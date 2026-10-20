@@ -56,6 +56,8 @@ func Load() {
 	}
 }
 func GetConfig() *Config {
-	Load()
+	if configuration == nil {
+		Load()
+	}
 	return configuration
 }
